@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<div class="content-wrapper">
+    <div class="ml-4">
+        <h4 for="formFileMultiple" class="form-title"> <span><b>Update Subject</b> </span></h4>
+        {% include "message.html" %}
+        <div class="col-12 ">
+
+            <form action="{% url 'update_subject' %}" method="post">
+                {% csrf_token %}
+                {% for i in edits %}
+                <div class="col-md-12">
+                    <label for="inputfirstname" class="form-label">Subject Name</label>
+                    <input type="text" name="S_name" class="form-control" value="{{i.S_name}}" id="inputCity" required>
+                    <input type="text" name="subject_id" hidden value="{{i.id}}" class="form-control">
+                </div>
+                <div class=" col-md-12">
+                    <label for="inpugender">Course</label>
+                    <select id="inputgender" name="course_name" class="form-control" required>
+                        <option value="{{i.course}}">Select Course</option>
+
+                        {% for j in course_name %}
+
+                        <option value="{{j.id}}">{{j.name}}</option>
+                        {% endfor %}
+                    </select>
+
+                </div>
+
+                <div class=" col-md-12">
+                    <label for="inpugender">Staff</label>
+                    <select id="inputgender" name="staff_name" class="form-control" required>
+                        <option value="{{i.admin}}">Select Staff</option>
+                        {% for k in staff_name %}
+
+                        <option value="{{k.id}}">{{k.admin.first_name}}&nbsp;{{k.admin.last_name}}</option>
+                        {% endfor %}
+                    </select>
+
+                </div>
+                {% endfor %}
+                <br>
+                <div class="col-12 ">
+                    <button type="submit" class="btn alng-center btn-success">Update Subject</button>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+{% endblock body %}

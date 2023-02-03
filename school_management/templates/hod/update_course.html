@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+
+{% block body %}
+
+<div class="content-wrapper">
+    <div class="ml-4">
+        <h4 for="formFileMultiple" class="form-title"> <span><b>Add Course</b> </span></h4>
+        {% include "message.html" %}
+        <div class="col-12 ">
+            <form action="{% url 'update_course' %}" method="POST" class="row g-3">
+                {% csrf_token %}
+                
+                <div class="col-md-12 ">
+                    {% for i in  edit_course %}
+                      
+                    <label for="addcourse" class="form-label"> Course Name</label>
+                    <input type="text" class="form-control" name="addcourse" value="{{i.name}}" placeholder="Course Name">
+
+                    <input type="text" class="form-control" hidden name="course_id" value="{{i.id}}" placeholder="Course Name">
+                    {% endfor %}
+                </div>
+
+                <br><br><br>
+
+                <div class="col-12 ">
+                    <button type="submit" class="btn alng-center btn-success">Submit Course</button>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+{% endblock body %}

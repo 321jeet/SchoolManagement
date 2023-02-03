@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<div class="content-wrapper">
+    <div class="row   g-5">
+
+        <form action="{% url 'update_profile' %} " method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="col-12 ">
+                <h3 for="formFileMultiple" class="form-title"> <span><b> Profile Update</b> </span></h3>
+
+                {% include 'message.html' %}
+
+                <div class=" col-12 col-md-10">
+                    <label for="formFileMultiple" class="form-label">Profile pic</label>
+                    <input class="form-control" type="file" name='profile_pic' id="formFileMultiple" multiple>
+                </div>
+                <div class="col-12 col-sm-8 ">
+                    <label for="inputuserid" class="form-label">User Id</label>
+                    <input type="text" class="form-control" name="user_id" id="inputAddress2" value="{{user.id}}"
+                        placeholder="Student ID">
+                </div>
+                <div class=" col-sm-8">
+                    <label for="inputfirstname" class="form-label">First Name</label>
+                    <input type="text" name="first_name" class="form-control" value="{{user.first_name}}"
+                        id="inputCity">
+                </div>
+                <div class="col-12 col-sm-8">
+                    <label for="inputlastname" class="form-label">Last Name</label>
+                    <input type="text" name="last_name" class="form-control" value="{{user.last_name}}" id="inputCity">
+                </div>
+
+                <div class="col-12 col-sm-8">
+                    <label for="inputusername" class="form-label">Username</label>
+                    <input type="text" name="username" class="form-control" value="{{user.username}}" id="inputCity"
+                        readonly>
+                </div>
+                <div class="col-12 col-sm-8 ">
+                    <label for="inputEmail4" class="form-label">Email</label>
+                    <input type="email" name="email" class="form-control" value="{{user.email}}" id="inputEmail4"
+                        readonly>
+                </div>
+                <div class="col-12 col-sm-8">
+                    <label for="inputPassword4" class="form-label">Password</label>
+                    <input type="password" name="password" class="form-control" id="inputPassword4 "
+                        placeholder="fill if you want to change">
+                </div>
+                <br>
+                <div class="col-12 ">
+                    <button type="submit" class="btn alng-center btn-success">Update Profile</button>
+                </div>
+
+            </div>
+        </form>
+
+
+    </div>
+</div>
+<br>
+{% endblock body %}

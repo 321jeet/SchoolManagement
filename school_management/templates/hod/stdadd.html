@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<div class="content-wrapper ">
+    <div class=" ml-4 ">
+        <div class="col-12">
+
+
+            <h4 for="formFileMultiple" class="form-title"> <span><b>Add Student</b> </span></h4>
+            {% comment %} message start {% endcomment %}
+
+            {% include 'message.html' %}
+
+            {% comment %} message end {% endcomment %}
+            <form action="{% url 'add_student' %}" class="row g-5 " method="POST">
+                {% csrf_token %}
+
+                <div class="col-md-12">
+                    <label for="formFileMultiple" class="form-label">Profile pic</label>
+                    <input class="form-control" type="file" name="profile_pic" id="formFileMultiple" multiple>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputfirstname" class="form-label">First Name</label>
+                    <input type="text" name="first_name" class="form-control" id="inputCity" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputlastname" class="form-label">Last Name</label>
+                    <input type="text" name="last_name" class="form-control" id="inputCity" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputusername" class="form-label">Username</label>
+                    <input type="text" name="username" class="form-control" id="inputCity" required>
+                </div>
+                <div class="col-md-6 ">
+                    <label for="inputEmail4" class="form-label">Email</label>
+                    <input type="email" name="email" class="form-control" id="inputEmail4" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputPassword4" class="form-label">Password</label>
+                    <input type="password" name="password" class="form-control" id="inputPassword4 " placeholder=""
+                        required>
+                </div>
+                
+                <div class=" col-md-6">
+                    <label for="inpugender">Gender</label>
+                    <select id="inputgender" class="form-control" name="gender">
+                        <option selected>Select Gender</option>
+                       <option value="male">Male</option>
+                       <option value="female">Female</option>
+                       <option value="other">Others</option>
+                    </select>
+                </div>
+                <div class="col-md-6 ">
+                    <label for="inputEmail4" class="form-label">Date of Birth</label>
+                    <input type="date" name="dob" class="form-control" id="inputEmail4" required>
+                </div>
+
+                <div class=" col-md-6">
+                    <label for="inpugender">Course</label>
+                    <select id="inputgender" name="course_id" class="form-control" required>
+                        <option >Select Course</option>
+                        {% for i in  courses %}
+                        
+                        <option value="{{i.id}}">{{i.name}}</option>
+                        {% endfor %}
+                       
+                     
+                    </select>
+                </div>
+                <div class=" col-md-6">
+                    <label for="inpugender">Session Year</label>
+                    <select id="inputgender" name="session_years_id" class="form-control" required>
+                        <option >Select Session</option>
+                        {% for i in  session_years %}
+                        
+                        <option value="{{i.id}}">{{i.session_start}} To {{i.session_end}}</option>
+                        {% endfor %}
+                     
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputfirstname" class="form-label">Father Name</label>
+                    <input type="text" name="father_name" class="form-control" id="inputCity" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputlastname" class="form-label">Mother Name</label>
+                    <input type="text" name="mother_name" class="form-control" id="inputCity" required>
+                </div>
+
+
+
+                <div class="col-md-6 ">
+                    <label for="inputAddress" class="form-label">Address</label>
+                    <input type="text" name="address" class="form-control" id="inputAddress" placeholder="1234 Main St"
+                        required>
+                </div>
+
+                <div class="col-md-6 ">
+                    <label for="inputCity" class="form-label">City</label>
+                    <input type="text" name="city" class="form-control" id="inputCity" required>
+                </div>
+                <div class="col-md-6 ">
+                    <label for="inputEmail4" class="form-label">Mobile Number</label>
+                    <input type="type" name="mobile" class="form-control" id="inputEmail4" required>
+                </div>
+                <br>
+                <div class="col-12 ">
+                    <button type="submit" class="btn alng-center btn-success">Add Student</button>
+                </div>
+
+            </form>
+            <br>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}

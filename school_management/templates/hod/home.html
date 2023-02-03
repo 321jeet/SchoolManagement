@@ -1,0 +1,206 @@
+{% extends "base.html" %}
+{% load static %}
+{% block body %}
+
+<body>
+    <div class="content-wrapper">
+
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0">Dashboard</h1>
+                    </div><!-- /.col -->
+
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+
+                            {% if user.user_type == '1' %}
+                            <li class="breadcrumb-item">Head Of Department</li>
+                            {% elif user.user_type == '2' %}
+                            <li class="breadcrumb-item">STAFF</li>
+                            {% else %}
+                            <li class="breadcrumb-item">STAUDENT</li>
+                            {% endif %}
+                            <li class="breadcrumb-item active">{{user}}</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+            <!-- Main content -->
+            <section class="content">
+                <div class="container-fluid">
+                    <!-- Small boxes (Stat box) -->
+                    <div class="row">
+                        <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-info">
+                                <div class="inner">
+                                    <h3>{{student_counts}}</h3>
+
+                                    <h4>Student</h4>
+                                </div>
+                                <div class="icon">
+                                    <i class="fas fa-user-graduate"></i>
+                                </div>
+                                <a href="/view_student" class="small-box-footer">More info <i
+                                        class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <!-- ./col -->
+                        <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-success">
+                                <div class="inner">
+                                    <!-- <h3>53<sup style="font-size: 20px">+</sup></h3> -->
+                                    <h3> {{staff_counts}}</h3>
+
+                                    <h4>Staff</h4>
+                                </div>
+                                <div class="icon">
+                                    <i class="fas fa-chalkboard-teacher"></i>
+                                </div>
+                                <a href="/view_staff" class="small-box-footer">More info <i
+                                        class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <!-- ./col -->
+                        <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-warning">
+                                <div class="inner">
+                                    <h3>{{course_counts}}</h3>
+
+                                    <h4>Course</h4>
+                                </div>
+                                <div class="icon">
+                                    <i class="fas fa-graduation-cap"></i>
+                                </div>
+                                <a href="/view_course" class="small-box-footer">More info <i
+                                        class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <!-- ./col -->
+                        <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-danger">
+                                <div class="inner">
+                                    <h3>{{subject_counts}}</h3>
+
+                                    <h5>Subject</h5>
+                                </div>
+                                <div class="icon">
+                                    <i class="fas fa-book"></i>
+                                </div>
+                                <a href="/view_subject" class="small-box-footer">More info <i
+                                        class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <!-- ./col -->
+                    </div>
+                    <div class="row">
+
+                        <section class="col-lg-7 connectedSortable ">
+                            <!-- Custom tabs (Charts with tabs)-->
+                            <div class="card  bg-gradient-dark">
+                                <div class="card-header">
+                                    <h3 class="card-title">
+                                        <i class="fas fa-chart-bar mr-1"></i>
+                                        Student
+                                    </h3>
+                                    
+                                </div>
+                                <div class="card-body bg-gradient-info ">
+                                    <div class="tab-content p-0">
+                                        <!-- Morris chart - Student -->
+                                        <div class="chart tab-pane active" style="position: relative; height: 320px;">
+
+                                            <div id="student_count" height="300" style="height: 300px;"></div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- staffff -->
+                            <div class="card bg-gradient-dark">
+                                <div class="card-header">
+                                    <i class="fas fa-chart-pie mr-1"></i>
+                                    <h3 class="card-title">All Data</h3>
+                                </div>
+                            </div>
+                            <div class="card-body bg-gradient-warning ">
+                                <div class="tab-content ">
+                                    <!-- Morris chart - Student -->
+                                    <div class="chart tab-pane active" style="position: relative; height: 320px;">
+
+                                        <div id="all_detail" height="300" style="height: 300px;"></div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </section>
+
+                        <section class="col-lg-5 connectedSortable">
+                            <!-- Map card -->
+                            <div class="card ">
+                               
+                                <div class="card-header bg-gradient-dark border-0 ">
+                                    
+                                        <h3 class="card-title">Staff And Student</h3>
+                                    
+  
+                                </div>
+                              
+                                <div class="card-body bg-gradient-secondary ">
+                                    <div class="tab-content ">
+                                      
+                                        <div class="chart tab-pane active" style="position: relative; height: 320px;">
+
+                                            <div id="staff_student" height="130" style="height: 115px;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                        
+
+                            </div>
+                            <div class="card ">
+                                <div class="card-header bg-gradient-dark border-0">
+                               
+                                        <h3 class="card-title">Course And Subject</h3>
+                                    
+                               
+                                </div>
+                                <div class="card-body bg-gradient-success">
+                                    <div class="tab-content ">
+                                        <!-- Morris chart - Student -->
+                                        <div class="chart tab-pane active" style="position: relative; height: 320px;">
+
+                                            <div id="course_subject" height="130" style="height: 115px;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.card-body-->
+
+                            </div>
+                        </section>
+                    </div>
+
+                </div>
+            </section>
+            <!-- /.content -->
+        </div>
+    </div>
+    </div>
+
+</body>
+
+{% endblock body %}
+
+{% block js %}
+
+{% include "chart.html" %}
+
+{% endblock js %}

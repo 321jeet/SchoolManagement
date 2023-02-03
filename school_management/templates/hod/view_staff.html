@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block style %}
+
+
+<style>
+    .my-custom-scrollbar {
+        position: relative;
+        height: 10%;
+        overflow: auto;
+    }
+
+    .table-wrapper-scroll-y {
+        display: block;
+    }
+</style>
+{% endblock style %}
+
+{% block body %}
+<div class="content-wrapper">
+
+    <div class="ml-4">
+        <hr>
+        <h4 for="formFileMultiple align-center" class="form-title"> <span><b>View staff</b> </span></h4>
+        {% include "message.html" %}
+
+        <!--Table-->
+
+        <div class="table-wrapper-scroll-y my-custom-scrollbar">
+            <table class="table table-striped mb-2 ">
+
+                <!--Table head-->
+                <thead>
+                    <tr class="table-warring">
+                        <th scope="col">S.No</th>
+                        <th scope="col">User Name</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">Dateof Birth</th>
+                        <th scope="col">Gender</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">City</th>
+                        <th scope="col">Contact</th>
+                        <th scope="col">Created</th>
+                        <th scope="col">Updated</th>
+                        <th colspan="2">Action</th>
+
+                    </tr>
+                </thead>
+                <!--Table head-->
+
+                <!--Table body-->
+                <tbody>
+                    {% for i in view_staffs %}
+
+                    <tr class="table-info">
+                        <th scope="row">{{forloop.counter}}</th>
+                        <td>{{i.admin}}</td>
+                        <td>{{i.admin.first_name}}</td>
+                        <td>{{i.admin.last_name}}</td>
+                        <td>{{i.dateofbirth}}</td>
+                        <td>{{i.gender}}</td>
+                        <td>{{i.admin.email}}</td>
+                        <td>{{i.address}}</td>
+                        <td>{{i.city}}</td>
+                        <td>{{i.mobile}}</td>
+                        <td>{{i.created_at}}</td>
+                        <td>{{i.update_at}}</td>
+                        <td> <a href="/edit_staff/{{i.id}}"><i class="fas fa-pencil-alt p-2 mb-1 bg-warning"></i></a>
+                            &nbsp;
+                        </td>
+                        <td> <a href="/delete_staff/{{i.admin.id}}"><i class="fas fa-trash p-2 mb-1 bg-danger"></i></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+                <!--Table body-->
+
+
+            </table>
+            <!--Table-->
+
+        </div>
+    </div>
+
+</div>
+{% endblock body %}

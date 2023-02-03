@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block body %}
+  
+
+<div class="content-wrapper">
+
+    <div class=" ml-4 ">
+        <div class="col-12">
+
+
+            <h4 for="formFileMultiple" class="form-title"> <span><b>Add Subject</b> </span></h4>
+            {% comment %} message start {% endcomment %}
+
+            {% include 'message.html' %}
+
+            {% comment %} message end {% endcomment %}
+            <form action="{% url 'add_subject' %}" method="post" >
+                {% csrf_token %}
+                <div class="col-md-12">
+                    <label for="inputfirstname" class="form-label">Subject Name</label>
+                    <input type="text" name="S_name" class="form-control" id="inputCity" required>
+                </div>
+
+                <div class=" col-md-12">
+                    <label for="inpugender">Course</label>
+                    <select id="inputgender" name="course_name" class="form-control" required>
+                        <option >Select Course</option>
+                        {% for i in  course_names %}
+                        
+                        <option value="{{i.id}}">{{i.name}}</option>
+                        {% endfor %}
+                    </select>
+
+                </div>
+
+                <div class=" col-md-12">
+                    <label for="inpugender">Staff</label>
+                    <select id="inputgender" name="staff_name" class="form-control" required>
+                        <option >Select Staff</option>
+                        {% for i in  staff_names %}
+                        <option value="{{i.id}}">{{i.admin.first_name}} &nbsp; {{i.admin.last_name}} </option>
+                        {% endfor %}
+                    </select>
+
+                </div>
+
+                <br>
+                <div class="col-12 ">
+                    <button type="submit" class="btn alng-center btn-success">Add Student</button>
+                </div>
+
+            </form>
+
+
+
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock body %}

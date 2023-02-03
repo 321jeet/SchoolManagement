@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="content-wrapper">
+
+
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h3 class="m-0">View Attendance </h3>
+            </div><!-- /.col -->
+
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+    <section class="content">
+        <div class="container-fluid">
+
+            {% include "message.html" %}
+            <div class="col-12 ">
+                {% if action is None %}
+                <form action="?action=show_attendance " method="post">
+                    {% csrf_token %}
+                    <div class=" col-md-12">
+                        <label for="inpugender">Subject</label>
+                        <select id="inputgender" name="subject_id" class="form-control" required>
+                            <option>Select Subject</option>
+                            {% for i in subject %}
+
+                            <option value="{{i.id}}">{{ i.S_name }}</option>
+                            {% endfor %}
+                        </select>
+
+                    </div>
+                    <br>
+                    <div class="col-12 ">
+                        <button type="submit" class="btn alng-center btn-success">Show Student</button>
+                    </div>
+
+                </form>
+                {% else %}
+
+                <form action="{% url 'student_view_attendnace' %}" method="post">
+                    {% csrf_token %}
+
+                    <div class=" col-md-12">
+                        <label for="inputsubject">Subject </label>
+                        <select id="inputsubject" name="subject_id" class="form-control" disabled>
+
+                            <option value="">{{get_subject}}</option>
+
+                        </select>
+
+                    </div>
+
+                   
+                    <br>
+                    <div class="col-12 ">
+
+
+                        <!--Table-->
+                        <table class="table table-striped ">
+
+                            <!--Table head-->
+                            <thead>
+                                <tr class="table-warring">
+                                    <th>S.No</th>
+                                    <th>Date</th>
+                                    <th>Subject</th>
+                                    <th>Session</th>
+                                </tr>
+                            </thead>
+                            <!--Table head-->
+
+                            <!--Table body-->
+                            <tbody>
+                                {% for i in attendance_report %}
+
+                                <tr class="table-info">
+                                    <th scope="row">{{forloop.counter}}</th>
+                                    <td>{{i.attendance_id.attendance_date}}</td>
+                                    <td>{{i.attendance_id.subject_id.S_name}}</td>
+                                    <td>{{i.attendance_id.session_years_id.session_start}} to {{i.attendance_id.session_years_id.session_end}}</td>
+                                     
+
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                            <!--Table body-->
+
+
+                        </table>
+                        <!--Table-->
+                    </div>
+
+                </form>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+    </section>
+
+
+
+</div>
+
+
+
+
+
+{% endblock body %}

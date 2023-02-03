@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<div class="content-wrapper ">
+    <div class="ml-4">
+        
+        <h4 for="formFileMultiple" class="form-title"> <span><b>Update _Staff</b> </span></h4>
+        {% comment %} message start {% endcomment %}
+
+        {% include 'message.html' %}
+
+        {% comment %} message end {% endcomment %}
+
+
+        <form action="{% url 'update_staff' %}"  class=" row g-3"  method="POST">
+{% csrf_token %}
+            {% for i in edit_staffs %}
+
+
+            <div class="col-md-12">
+                <label for="formFileMultiple" class="form-label">Profile pic</label>
+                <input class="form-control" type="file" value="" name="photo" id="formFileMultiple" multiple>
+                <input class="form-control" type="text" value="{{i.admin.id}}" hidden name="staff_id"
+                    id="formFileMultiple">
+            </div>
+            <div class="col-md-6">
+                <label for="inputfirstname" class="form-label">First Name</label>
+                <input type="text" name="first_name" value="{{i.admin.first_name}}" class="form-control" id="inputCity">
+            </div>
+            <div class="col-md-6">
+                <label for="inputlastname" class="form-label">Last Name</label>
+                <input type="text" name="last_name" value="{{i.admin.last_name}}" class="form-control" id="inputCity">
+            </div>
+
+            <div class="col-md-6">
+                <label for="inputlastname" class="form-label">User Name</label>
+                <input type="text" name="username" value="{{i.admin.username}}" class="form-control" id="inputCity">
+            </div>
+
+            <div class=" col-md-6">
+                <label for="" class="form-label">Email</label>
+                <input type="email" class="form-control" value="{{i.admin.email}}" name="email" id=""
+                    aria-describedby="emailHelpId" placeholder="abc@mail.com">
+
+            </div>
+
+            <div class="col-md-6">
+                <label for="inputPassword4" class="form-label">Password</label>
+                <input type="password" name="password" class="form-control" id="inputPassword4 "
+                    placeholder=" fill only if you want to change password">
+            </div>
+            <div class="col-md-6">
+                <label for="inputgender" class="form-label">Gender</label>
+                <select class="form-control" aria-label="Default select example" name="gender">
+                    <option>Select Gender</option>
+                    <option value="{{i.gender}}">male</option>
+                    <option value="{{i.gender}}">Female</option>
+                    <option value="{{i.gender}}">Other</option>
+                </select>
+
+            </div>
+            <div class="col-md-6 ">
+                <label for="inputEmail4" class="form-label">Date of Birth</label>
+                <input type="date" name="dob" value="{{i.dateofbirth}" class="form-control" id="inputEmail4">
+            </div>
+
+            <div class="col-md-6 ">
+                <label for="inputAddress" class="form-label">Address</label>
+                <input type="text" name="address" value=" {{i.address}}" class="form-control" id="inputAddress"
+                    placeholder="1234 Main St">
+            </div>
+
+            <div class="col-md-6 ">
+                <label for="inputCity" class="form-label">City</label>
+                <input type="text" name="city" value=" {{i.city}}" class="form-control" id="inputCity">
+            </div>
+            <div class="col-md-6 ">
+                <label for="inputEmail4" class="form-label">Mobile Number</label>
+                <input type="type" name="mobile" value=" {{i.mobile}}" class="form-control" id="inputEmail4">
+            </div>
+            {% endfor %}
+            <br>
+            <div class="col-12 ">
+                <button type="submit" class="btn alng-center btn-success">Update Student</button>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+{% endblock body %}

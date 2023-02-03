@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="content-wrapper">
+
+
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h3 class="m-0">View Attendance </h3>
+            </div><!-- /.col -->
+
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+    <section class="content">
+        <div class="container-fluid">
+
+            {% include "message.html" %}
+            <div class="col-12 ">
+                {% if action is None %}
+
+                <form action="?action=view_student " method="post">
+                    {% csrf_token %}
+                    <div class=" col-md-12">
+                        <label for="inpugender">Subject</label>
+                        <select id="inputgender" name="subject_id" class="form-control" required>
+                            <option>Select Subject</option>
+                            {% for i in subject %}
+
+                            <option value="{{i.id}}">{{ i.S_name }}</option>
+                            {% endfor %}
+                        </select>
+
+                    </div>
+
+                    <div class=" col-md-12">
+                        <label for="inpugender">Session Years</label>
+                        <select id="inputgender" name="session_id" class="form-control" required>
+                            <option>Select Session</option>
+                            {% for i in session_years %}
+                            <option value="{{i.id}}">{{ i.session_start }} &nbsp; {{ i.session_end }} </option>
+                            {% endfor %}
+                        </select>
+
+                    </div>
+                    <div class="col-md-12">
+                        <label for="inputdate" class="form-label">Attendance Date</label>
+                        <input type="date" name="attendence_date" class="form-control" id="inputCity" required>
+                    </div>
+
+                    <br>
+                    <div class="col-12 ">
+                        <button type="submit" class="btn alng-center btn-success">Show Student</button>
+                    </div>
+
+                </form>
+                {% else %}
+
+                <form action="{% url 'staff_view_student_attendnace' %}" method="post">
+                    {% csrf_token %}
+
+                    <div class=" col-md-12">
+                        <label for="inputsubject">Subject </label>
+                        <select id="inputsubject" name="subject_id" class="form-control" disabled>
+
+                            <option value="{{ get_subjects.id }}">{{ get_subject }}</option>
+
+                        </select>
+
+                    </div>
+
+                    <div class=" col-md-12">
+                        <label for="inputsession">Session Years</label>
+                        <select id="inputsession" name="session_id" class="form-control" disabled>
+
+                            <option value="{{ get_sessions.id }}">{{get_session }} </option>
+
+                        </select>
+
+                    </div>
+                    <div class="col-md-12">
+                        <label for="inputdate" class="form-label">Attendance Date</label>
+                        <input type="date" name="attendence_date" class="form-control" id="inputCity"
+                            value="{{attendance_date}}" disabled>
+                    </div>
+                    <br>
+                    <div class="col-12 ">
+
+
+                        <!--Table-->
+                        <table class="table table-striped ">
+
+                            <!--Table head-->
+                            <thead>
+                                <tr class="table-warring">
+                                    <th>S.No</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                </tr>
+                            </thead>
+                            <!--Table head-->
+
+                            <!--Table body-->
+                            <tbody>
+                                {% for i in attendance_report %}
+
+                                <tr class="table-info">
+                                    <th scope="row">{{forloop.counter}}</th>
+                                    <td>{{i.student_id.admin.first_name}} &nbsp;{{i.student_id.admin.last_name}} </td>
+                                    <td>{{i.student_id.admin.email}}</td>
+
+
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                            <!--Table body-->
+
+
+                        </table>
+                        <!--Table-->
+                    </div>
+
+                </form>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+    </section>
+
+
+
+</div>
+
+
+
+
+
+{% endblock body %}

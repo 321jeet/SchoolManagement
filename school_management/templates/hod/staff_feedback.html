@@ -1,0 +1,203 @@
+{% extends "base.html" %}
+
+{% block style %}
+
+<style>
+    .my-custom-scrollbar {
+        position: relative;
+        height: 10%;
+        overflow: auto;
+    }
+
+    .table-wrapper-scroll-y {
+        display: block;
+    }
+</style>
+{% endblock style %}
+{% block body %}
+<div class="content-wrapper">
+
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">STAFF Feedback</h1>
+                </div><!-- /.col -->
+
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+
+                        <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                            data-bs-target="#view_feedback">
+                            View All Feedback
+                        </button>
+                    </ol>
+
+
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+        <section class="content">
+            <div class="container-fluid">
+
+                {% comment %} message start {% endcomment %}
+
+                {% include 'message.html' %}
+
+                {% comment %} message end {% endcomment %}
+
+                <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                    <table class="table table-striped mb-2 ">
+
+                        <!--Table head-->
+                        <thead>
+                            <tr class="table-warring">
+                                <th scope="col">S.No</th>
+                                <th scope="col">Staff Name</th>
+
+                                <th scope="col">Feedback</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Action</th>
+
+                            </tr>
+                        </thead>
+                        <!--Table head-->
+
+                        <!--Table body-->
+                        <tbody>
+                            {% for i in feedback %}
+
+                            <tr class="table-info">
+                                <th scope="row">{{forloop.counter}}</th>
+                                <td>{{i.staff_id.admin.first_name}} &nbsp; {{i.staff_id.admin.last_name}}</td>
+                                <td>{{i.feedback}}</td>
+                                <td>{{i.created_at}}</td>
+
+                                <td>
+
+                                    <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                        data-bs-target="#view_feedback-{{forloop.counter}}">
+                                        Reply
+                                    </button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+
+                        </tbody>
+                    </table>
+                    <!--Table-->
+
+                </div>
+            </div>
+            <br>
+
+        </section>
+
+
+        <!-- Modal view -->
+        <div class="modal fade" id="view_feedback" tabindex="-1" aria-labelledby="view_feedbackLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="view_feedbackLabel">View All Feedback
+                        </h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                            <table class="table table-striped mb-2 ">
+
+                                <!--Table head-->
+                                <thead>
+                                    <tr class="table-warring">
+                                        <th scope="col">S.No</th>
+                                        <th scope="col">Feedback</th>
+                                        <th scope="col">Feedback Reply</th>
+                                       
+                                    </tr>
+                                </thead>
+                                <!--Table head-->
+
+                                <!--Table body-->
+                                <tbody>
+                                    {% for k in feedback %}
+
+                                    <tr>
+                                        <th scope="row">{{forloop.counter}}</th>
+                                        <td>{{k.feedback}}</td>
+                                        
+                                        {% if k.feedback_reply == '' %}
+                                        <td> <span class="badge "
+                                                style="background-color: rgb(229, 8, 20); font-size:13px;">Unreply
+                                                feedback</span></td>
+                                        {% else %}
+                                        <td>{{k.feedback_reply}} </td>
+                                        {% endif %}
+
+
+                                    </tr>
+                                    {% endfor %}
+
+                                </tbody>
+                            </table>
+                            <!--Table-->
+
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- End  Modal view -->
+
+
+        <!-- second model -->
+        {% for j in feedback %}
+          
+        
+        <div class="modal fade" id="view_feedback-{{forloop.counter}}" tabindex="-1" aria-labelledby="view_feedbackLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="view_feedbackLabel">Reply To : {{j.staff_id.admin.first_name}}
+                            &nbsp; {{j.staff_id.admin.last_name}}
+                        </h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <form action="{% url 'hod_staff_feedback_reply_save' %}" method="POST">
+                            {% csrf_token %}
+                            <div class="modal-body">
+                                <textarea name="feedback_reply" class="form-control"  rows="4"   ></textarea>
+                                <input type="text" hidden  name="feedback_id" class="form-control" value="{{j.id}}">
+                            </div>
+                            <div class="modal-footer">
+                               
+                                <button type="submit" class="btn btn-primary">Send Reply</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+
+                    </div>
+ 
+                </div>
+            </div>
+        </div>
+
+        {% endfor %}
+    </div>
+
+
+
+</div>
+{% endblock body %}

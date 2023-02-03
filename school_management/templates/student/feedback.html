@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="content-wrapper">
+
+
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h3 class="m-0">Send Feedback</h3>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+
+                    <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                        data-bs-target="#leave_history">
+                        <i class=" fas fa-bell"></i>
+                        Feedback  History
+                    </button>
+                </ol>
+
+
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+    <section class="content">
+        <div class="container-fluid">
+
+            {% include "message.html" %}
+            <div class="col-12 ">
+                <form action="{% url 'student_feedback_save' %}" method="POST" class="row g-3">
+                    {% csrf_token %}
+
+                    <div class="col-md-12 ">
+                        <label for="addcourse" class="form-label"> FeedBack Message</label>
+                        <textarea name="feedback" style="height: 200px;" class="form-control"  required></textarea>
+                    </div>
+                   
+                    <div class="col-md-12 ">
+                        <button type="submit" class="btn alng-center btn-success"> Send Feedback</button>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+    </section>
+
+
+    <div class="modal fade" id="leave_history" tabindex="-1" aria-labelledby="leave_historyLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="leave_historyLabel">Feedbcak History
+                </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                    <table class="table table-striped mb-2 ">
+        
+                        <!--Table head-->
+                        <thead>
+                            <tr class="table-warring">
+                                <th scope="col">S.No</th>
+                                <th scope="col"> feedback</th>
+                                <th scope="col">reply</th>
+                                
+        
+                            </tr>
+                        </thead>
+                        <!--Table head-->
+        
+                        <!--Table body-->
+                        <tbody>
+                            {% for i in feedback_history %}
+                            <tr class="table-info">
+                                <th scope="row">{{forloop.counter}}</th>
+                                <td>{{i.feedback}}</td>
+                               
+                                {% if i.feedback_reply == '' %}
+                                <td>
+                                    <span  class="btn btn-danger">No Reply</span>
+                                    
+                                </td>
+                                {% else %}
+                                <td>
+                                    <span style="font-size: 14px;"  class="badge badge-success">{{i.feedback_reply}}</span>
+                                </td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+        
+                        </tbody>
+                        <!--Table body-->
+        
+        
+                    </table>
+                    <!--Table-->
+        
+                </div>    
+               
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Send</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+
+
+{% endblock body %}

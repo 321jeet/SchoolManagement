@@ -1,0 +1,197 @@
+{% extends "base.html" %}
+
+{% block style %}
+
+<style>
+    .my-custom-scrollbar {
+        position: relative;
+        height: 10%;
+        overflow: auto;
+    }
+
+    .table-wrapper-scroll-y {
+        display: block;
+    }
+</style>
+{% endblock style %}
+{% block body %}
+<div class="content-wrapper">
+
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">STAFF Notification</h1>
+                </div><!-- /.col -->
+
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+
+                        <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                            data-bs-target="#view_notification">
+                            View All Notification
+                        </button>
+                    </ol>
+
+
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+        <section class="content">
+            <div class="container-fluid">
+              
+                {% comment %} message start {% endcomment %}
+
+                {% include 'message.html' %}
+
+                {% comment %} message end {% endcomment %}
+
+                <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                    <table class="table table-striped mb-2 ">
+
+                        <!--Table head-->
+                        <thead>
+                            <tr class="table-warring">
+                                <th scope="col">S.No</th>
+                                <th scope="col">User Name</th>
+                                <th scope="col">First Name</th>
+                                <th scope="col">Last Name</th>
+                                <th scope="col">Email</th>
+                                <th colspan="2">Action</th>
+
+                            </tr>
+                        </thead>
+                        <!--Table head-->
+
+                        <!--Table body-->
+                        <tbody>
+                            {% for i in staff_names %}
+
+                            <tr class="table-info">
+                                <th scope="row">{{forloop.counter}}</th>
+                                <td>{{i.admin.username}}</td>
+                                <td>{{i.admin.first_name}}</td>
+                                <td>{{i.admin.last_name}}</td>
+                                <td>{{i.admin.email}}</td>
+
+                                <td>
+
+                                    <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                        data-bs-target="#send_notification-{{forloop.counter}}">
+                                        Send Notification
+                                    </button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+
+                        </tbody>
+                    </table>
+                    <!--Table-->
+
+                </div>
+            </div>
+            <br>
+
+        </section>
+
+
+        <!-- Modal view -->
+        <div class="modal fade" id="view_notification" tabindex="-1" aria-labelledby="view_notificationLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="view_notificationLabel">View All Notifications
+                        </h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                            <table class="table table-striped mb-2 ">
+        
+                                <!--Table head-->
+                                <thead>
+                                    <tr class="table-warring">
+                                        <th scope="col">S.No</th>
+                                        <th scope="col">Massage</th>
+                                        <th scope="col">Status</th>
+                                    </tr>
+                                </thead>
+                                <!--Table head-->
+        
+                                <!--Table body-->
+                                <tbody>
+                                    {% for k in message_see %}
+        
+                                    <tr >
+                                        <th scope="row">{{forloop.counter}}</th>
+                                        <td>{{k.message}}</td>
+                                        {% if k.status == 0 %}
+                                        <td> <span class="badge "style="background-color: rgb(229, 8, 20); font-size:13px;">Unread messages  </span></td>
+                                        {% else %}
+                                        <td> <span class="badge " style="background-color:rgb(122, 238, 122); font-size:13px;">Read messages  </span></td>
+                                        {% endif %}
+        
+                                      
+                                    </tr>
+                                    {% endfor %}
+        
+                                </tbody>
+                            </table>
+                            <!--Table-->
+        
+                        </div>
+                       
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+   
+        <!-- End  Modal view -->
+
+
+        <!-- second model -->
+
+        {% for j in staff_names %}
+        <div class="modal fade" id="send_notification-{{forloop.counter}}" tabindex="-1"
+            aria-labelledby="send_notificationLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h3 class="modal-title fs-5" id="send_notificationLabel"> Staff Notifications  !
+                            {{j.admin.first_name}}&nbsp;{{j.admin.last_name}}
+                        </h3>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <form action="{% url 'hod/staff_save_notification' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="modal-body">
+                            <input type="text" class="form-control" name="messages"
+                                placeholder="type messages.........!">
+                            <input type="text" hidden name="staff_id" class="form-control" value="{{j.id}}">
+                        </div>
+
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Send Notification</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+
+
+</div>
+{% endblock body %}

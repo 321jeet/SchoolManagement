@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<div class="content-wrapper ">
+
+    <div class="ml-4">
+        <div class="col-12">
+
+
+            <h4 for="formFileMultiple" class="form-title"> <span><b>Add Session</b> </span></h4>
+            {% comment %} message start {% endcomment %}
+
+            {% include 'message.html' %}
+
+            {% comment %} message end {% endcomment %}
+            <form action="{% url 'update_session'%}" class="row g-3" method="post">
+                {% csrf_token %}
+
+                {% for i in edit_session %}
+                <div class="col md-6">
+                    <label for="session_start"> Session Start</label>
+                    <input type="text" value="{{i.session_start}}" class="form-control" name="session_start">
+                    <input type="text" value="{{i.id}}" class="form-control" hidden name="session_id">
+                </div>
+                
+                <div class="col md-6">
+                    <label for="session_end"> Session end</label>
+                    <input type="text" value="{{i.session_end}}" class="form-control" name="session_end">
+                </div>
+                {% endfor %}<br>
+
+                <div class="col-md-12 ">
+                    <button type="submit" class="btn alng-center btn-success">Add Student</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}

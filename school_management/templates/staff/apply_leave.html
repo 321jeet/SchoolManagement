@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="content-wrapper">
+
+
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h3 class="m-0">Apply for Leave</h3>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+
+                    <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                        data-bs-target="#leave_history">
+                        Leave Apply History
+                    </button>
+                </ol>
+
+
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+    <section class="content">
+        <div class="container-fluid">
+
+            {% include "message.html" %}
+            <div class="col-12 ">
+                <form action="{% url 'staff_apply_leave_save' %}" method="POST" class="row g-3">
+                    {% csrf_token %}
+
+
+                    <div class="col-md-12 ">
+                        <label for="addcourse" class="form-label"> Leave Date :</label>
+                        <input type="date" class="form-control" name="Leavedate">
+
+                    </div>
+                    <div class="col-md-12 ">
+                        <label for="addcourse" class="form-label"> Message</label>
+                        <textarea name="messageleave" style="height: 200px;" class="form-control"></textarea>
+                    </div>
+                   
+                    <div class="col-md-12 ">
+                        <button type="submit" class="btn alng-center btn-success">Apply For Leave</button>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+    </section>
+
+
+    <div class="modal fade" id="leave_history" tabindex="-1" aria-labelledby="leave_historyLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="leave_historyLabel">Leave History
+                </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                    <table class="table table-striped mb-2 ">
+        
+                        <!--Table head-->
+                        <thead>
+                            <tr class="table-warring">
+                                <th scope="col">S.No</th>
+                                <th scope="col"> Date</th>
+                                <th scope="col">Message</th>
+                                <th colspan="2">Stutas</th>
+        
+                            </tr>
+                        </thead>
+                        <!--Table head-->
+        
+                        <!--Table body-->
+                        <tbody>
+                            {% for i in staff_leave_history %}
+                            <tr class="table-info">
+                                <th scope="row">{{forloop.counter}}</th>
+                                <td>{{i.date}}</td>
+                                <td>{{i.messages}}</td> 
+                                {% if i.status == 0 %}
+                                <td>
+                                    <span disabled="disabled" class="btn btn-danger">Request are  Pending</span>
+                                    
+                                </td>
+                                 {% elif i.status == 1 %}
+                                 <td>
+                                    <span  disabled="disabled" class="btn btn-success">Accept</span>
+                                </td>
+                                {% else %}
+                                <td>
+                                    <span disabled="disabled" class="btn btn-danger">Rejected</span>
+                                </td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+        
+                        </tbody>
+                        <!--Table body-->
+        
+        
+                    </table>
+                    <!--Table-->
+        
+                </div>    
+               
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Send</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+
+
+{% endblock body %}

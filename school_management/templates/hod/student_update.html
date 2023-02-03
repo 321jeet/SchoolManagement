@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<div class="content-wrapper ">
+    <div class=" ml-4 ">
+        <!-- <div class="col-12"> -->
+
+
+        <h4 for="formFileMultiple" class="form-title"> <span><b>Update Student</b> </span></h4>
+        {% comment %} message start {% endcomment %}
+
+        {% include 'message.html' %}
+
+        {% comment %} message end {% endcomment %}
+
+
+        <form action="{% url 'update_student' %}" class="row g-3" method="POST">
+            {% csrf_token %}
+
+
+            {% for j in student_updates %}
+
+            <div class="col-md-12">
+                <label for="formFileMultiple" class="form-label">Profile pic</label>
+                <input class="form-control" type="file" value="" name="photo" id="formFileMultiple" multiple>
+                <input class="form-control" type="text" value="{{j.admin.id}}" hidden  name="student_id" id="formFileMultiple" >
+            </div>
+            <div class="col-md-6">
+                <label for="inputfirstname" class="form-label">First Name</label>
+                <input type="text" name="first_name" value="{{j.admin.first_name}}" class="form-control" id="inputCity"
+                   >
+            </div>
+            <div class="col-md-6">
+                <label for="inputlastname" class="form-label">Last Name</label>
+                <input type="text" name="last_name" value="{{j.admin.last_name}}" class="form-control" id="inputCity"
+                  >
+            </div>
+
+            <div class="col-md-6">
+                <label for="inputlastname" class="form-label">User Name</label>
+                <input type="text" name="username" value="{{j.admin.username}}" class="form-control" id="inputCity"
+                  >
+            </div>
+
+            <div class="col-md-6 ">
+                <label for="inputEmail4" class="form-label">Email</label>
+                <input type="email" name="email" value="{{j.admin.email}}" class="form-control" id="inputEmail4"
+                    >
+            </div>
+            <div class="col-md-6">
+                <label for="inputPassword4" class="form-label">Password</label>
+                <input type="password" name="password" class="form-control" id="inputPassword4 " placeholder=" fill only if you want to change password"
+                   >
+            </div>
+            <div class="col-md-6">
+                <label for="inputgender" class="form-label">Gender</label>
+                <select name="gender"  id="inputgender" class="form-select" >
+                    <option value=" "> Select Gender</option>
+                    <option value="male"> Male </option>
+                    <option value="female"> Female</option>
+                    <option value="other"> Others</option>
+                </select>
+            </div>
+            <div class="col-md-6 ">
+                <label for="inputEmail4" class="form-label">Date of Birth</label>
+                <input type="date" name="dob" value="{{j.dateofbirth}" class="form-control" id="inputEmail4" >
+            </div>
+            
+            <div class="col-md-6">
+                <label for="inputCity" class="form-label">Course</label>
+                <select class="form-select" name="course_id" >
+                    <option>Selecte Course</option>
+                    {% for i in courses %}
+                    <option value="{{i.id}}">{{i.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="inputCity" class="form-label">Session</label>
+                <select class="form-select" name="session_years_id">
+                    {% for i in session_years %}
+                    <option selected>Session Years</option>
+                    <option value="{{i.id}}">{{i.session_start}} To {{i.session_end}} </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="inputfirstname" class="form-label">Father Name</label>
+                <input type="text" name="father_name" value=" {{j.father_name}}" class="form-control"
+                    id="inputCity" required>
+            </div>
+            <div class="col-md-6">
+                <label for="inputlastname" class="form-label">Mother Name</label>
+                <input type="text" name="mother_name" value=" {{j.mother_name}}" class="form-control" id="inputCity" >
+            </div>
+
+           
+
+            <div class="col-md-6 ">
+                <label for="inputAddress" class="form-label">Address</label>
+                <input type="text" name="address" value=" {{j.address}}" class="form-control" id="inputAddress" placeholder="1234 Main St"
+                    >
+            </div>
+
+            <div class="col-md-6 ">
+                <label for="inputCity" class="form-label">City</label>
+                <input type="text" name="city"  value=" {{j.city}}"class="form-control" id="inputCity" >
+            </div>
+            <div class="col-md-6 ">
+                <label for="inputEmail4" class="form-label">Mobile Number</label>
+                <input type="type" name="mobile"  value=" {{j.mobile}}" class="form-control" id="inputEmail4" >
+            </div>
+            {% endfor %}
+            <br>
+            <div class="col-12 ">
+                <button type="submit" class="btn alng-center btn-success">Update Student</button>
+            </div>
+
+        </form>
+        <!-- </div> -->
+    </div>
+</div>
+
+{% endblock body %}

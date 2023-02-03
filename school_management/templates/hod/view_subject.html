@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+
+{% block body %}
+
+<div class="content-wrapper">
+    <div class="ml-4">
+        <hr>
+        <h4 for="formFileMultiple align-center" class="form-title"> <span><b>View staff</b> </span></h4>
+        {% include "message.html" %}
+
+        <!--Table-->
+
+        <div class="table-wrapper-scroll-y my-custom-scrollbar">
+            <table class="table table-striped mb-2 ">
+
+                <!--Table head-->
+                <thead>
+                    <tr class="table-warring">
+                        <th scope="col">S.No</th>
+                        <th scope="col">Subject Name</th>
+                        <th scope="col">Staff Name</th>
+                        <th scope="col">Course</th>
+                        <th scope="col">Created</th>
+                        <th scope="col">Updated</th>
+                        <th colspan="2">Action</th>
+
+                    </tr>
+                </thead>
+                <!--Table head-->
+
+                <!--Table body-->
+                <tbody>
+                    {% for i in subject_view %}
+
+                    <tr class="table-info">
+                        <th scope="row">{{forloop.counter}}</th>
+                        <td>{{i.S_name}}</td>
+                        <td>{{i.Staff}}</td>
+                        <td>{{i.course}}</td>
+                        <td>{{i.created_at}}</td>
+                        <td>{{i.update_at}}</td>
+                        <td> <a href="/edit_subject/{{i.id}}"><i class="fas fa-pencil-alt p-2 mb-1 bg-warning"></i></a>
+                            &nbsp;
+                        </td>
+                        <td> <a href="/delete_subject/{{i.id}}"><i class="fas fa-trash p-2 mb-1 bg-danger"></i></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+                <!--Table body-->
+
+
+            </table>
+            <!--Table-->
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock body %}
