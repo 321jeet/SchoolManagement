@@ -15,7 +15,7 @@ def base(request):
 def Login(request):
     
     return render(request,"login.html")    
-login_required(login_url='/')
+# login_required(login_url='/')
 def LoginPage(request):
     if request.method=='POST':
         user=EmailBackEnd.authenticate(request,username=request.POST.get('email'),password=request.POST.get('password'))
@@ -43,7 +43,7 @@ def LogOut(request):
      return  redirect('/')  
      
 
-login_required(login_url='/')
+# login_required(login_url='/')
 def Profile (request):
     user=CustomUser.objects.get(id=request.user.id)
     context={
@@ -52,7 +52,7 @@ def Profile (request):
 
     return render (request,'profile.html',context)
 
-login_required(login_url='/')
+# login_required(login_url='/')
 def ProfileUpadte(request):
     if request.method =="POST":
 
