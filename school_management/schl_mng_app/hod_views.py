@@ -178,9 +178,13 @@ login_required(login_url='/')
 def Add_Course(request):
     if request.method == 'POST':
         name = request.POST.get('addcourse')
-        add_course = Course(name=name)
-        add_course.save()
-        messages.success(request, ' Course Successfully  Saved')
+        if Course.objects.filter(name=name).exists():
+            messages.warning(request, 'course Allready Taken')
+            return redirect('add_course')
+        else:
+         add_course = Course(name=name)
+         add_course.save()
+         messages.success(request, ' Course Successfully  Saved')
         return redirect('add_course')
 
     return render(request, 'hod/course_add.html')
